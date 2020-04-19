@@ -6,8 +6,17 @@ class Camera:
 
     def __getattr__(self, item):
         command = item.replace('_', '-')
-        args_gen = lambda kwargs: ' '.join([f'--{k} {kwargs[k]}' for k in kwargs])
-        return lambda **kwargs: gp(f'--{command} {args_gen(kwargs)}')
+
+        def ret_func(**kwargs):
+            params = [f'--{command}'] + [x for y in zip([f'--{k}' for k in kwargs],
+                                                        [f'{kwargs[k]}' for k in kwargs]) for x in y]
+            print(params)
+            return gp(params)
+
+        return ret_func
+        
+        # return lambda **kwargs: gp([f'--{command}'] + [x for y in zip([f'--{k}' for k in kwargs],
+        #                                                               [f'{kwargs[k]}' for k in kwargs]) for x in y])
 
 
 camera = Camera()
