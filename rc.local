@@ -13,8 +13,8 @@
 
 cd ~/hummingbird_photographer/
 git reset --hard
-git checkout master
 git pull
+git checkout master
 sudo cp rc.local /etc/rc.local
 
 exit 0
