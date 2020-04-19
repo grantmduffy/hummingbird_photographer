@@ -11,7 +11,7 @@
 #
 # By default this script does nothing.
 
-cd ~/hummingbird_photographer/
+cd /home/pi/hummingbird_photographer/
 git reset --hard
 git pull
 git checkout master
