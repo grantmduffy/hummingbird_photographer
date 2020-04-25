@@ -13,7 +13,10 @@ class Camera:
                                                    [f'{kwargs[k]}' for k in kwargs]) for x in y])
 
     def set_config(self, arg, value):
-        return gp(['--set-congif', f'{arg}={value}'])
+        return gp(['--set-config', f'{arg}={value}'])
+
+    def get_config(self, arg):
+        return gp(['--get-config', f'{arg}'])
 
 
 camera = Camera()
