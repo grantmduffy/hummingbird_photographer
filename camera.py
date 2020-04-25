@@ -23,4 +23,5 @@ def capture(save_path=None):
         pass
     camera.capture_preview()
     if save_path is not None:
-        copy('capture_preview.jpg', save_path)
+        return copy('capture_preview.jpg', save_path)
+    return './capture_preview.jpg'
