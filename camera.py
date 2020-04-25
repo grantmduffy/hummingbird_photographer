@@ -46,4 +46,5 @@ def capture():
     camera.delete_all_files(folder=dcim_folder)
     camera.capture_image()
     s = camera.get_all_files()
-    return [line.split(' ')[3] for line in s.splitlines(True) if line[-1] != '\r']
+    camera.delete_all_files(folder=dcim_folder)
+    return [line.split(' ')[3].strip() for line in s.splitlines(True) if line[-1] != '\r']
