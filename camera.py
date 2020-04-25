@@ -43,7 +43,7 @@ def capture():
         rm('DSC*.JPG')
     except:
         pass
-    s = camera.capture_image()
-    s = camera.get_all_files()
     camera.delete_all_files(folder=dcim_folder)
+    camera.capture_image()
+    s = camera.get_all_files()
     return [line.split(' ')[3] for line in s.splitlines(True) if line[-1] != '\r']
