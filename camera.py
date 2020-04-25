@@ -4,6 +4,9 @@ from sh import gphoto2 as gp
 from sh import rm
 from shutil import copy
 
+burst_number = 5
+dcim_folder = '/store_00010001/DCIM/100D5100/'
+
 
 class Camera:
 
@@ -20,9 +23,11 @@ class Camera:
 
 
 camera = Camera()
+camera.set_config('burstnumber', burst_number)
+camera.set_config('capturemode', 1)
 
 
-def capture(save_path=None):
+def capture_preview(save_path=None):
     try:
         rm('capture_preview.jpg')
     except:
@@ -31,3 +36,14 @@ def capture(save_path=None):
     if save_path is not None:
         return copy('capture_preview.jpg', save_path)
     return './capture_preview.jpg'
+
+
+def capture():
+    try:
+        rm('DSC*.JPG')
+    except:
+        pass
+    s = camera.capture_image()
+    s = camera.get_all_files()
+    camera.delete_all_files(folder=dcim_folder)
+    return [line.split(' ')[3] for line in s.splitlines(True) if line[-1] != '\r']
