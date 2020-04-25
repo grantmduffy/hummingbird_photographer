@@ -12,6 +12,9 @@ class Camera:
                                    [x for y in zip([f'--{k}' for k in kwargs],
                                                    [f'{kwargs[k]}' for k in kwargs]) for x in y])
 
+    def set_config(self, arg, value):
+        return gp(['--set-congif', f'{arg}={value}'])
+
 
 camera = Camera()
 
