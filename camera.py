@@ -2,7 +2,6 @@
 
 from sh import gphoto2 as gp
 from sh import rm
-from shutil import copy
 
 burst_number = 5
 dcim_folder = '/store_00010001/DCIM/100D5100/'
@@ -27,14 +26,12 @@ camera.set_config('burstnumber', burst_number)
 camera.set_config('capturemode', 1)
 
 
-def capture_preview(save_path=None):
+def capture_preview():
     try:
         rm('capture_preview.jpg')
     except:
         pass
     camera.capture_preview()
-    if save_path is not None:
-        return copy('capture_preview.jpg', save_path)
     return './capture_preview.jpg'
 
 
