@@ -1,7 +1,7 @@
 # Used for controlling dslr via gphoto2
 
 from sh import gphoto2 as gp
-from sh import rm
+from os import system
 
 burst_number = 5
 dcim_folder = '/store_00010001/DCIM/100D5100/'
@@ -28,7 +28,8 @@ camera.set_config('capturemode', 1)
 
 def capture_preview():
     try:
-        rm('capture_preview.jpg')
+        system('rm capture_preview.jpg')
+        # rm('./capture_preview.jpg')
     except Exception as e:
         print('Failed to remove current images')
         print(e)
@@ -38,7 +39,8 @@ def capture_preview():
 
 def capture():
     try:
-        rm('DSC*.JPG')
+        system('rm DSC_*.JPG')
+        # rm('DSC*.JPG')
     except Exception as e:
         print('Failed to remove current images')
         print(e)
