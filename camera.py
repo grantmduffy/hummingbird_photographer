@@ -3,7 +3,6 @@
 from sh import gphoto2 as gp
 from os import system
 
-burst_number = 5
 dcim_folder = '/store_00010001/DCIM/100D5100/'
 
 
@@ -22,7 +21,6 @@ class Camera:
 
 
 camera = Camera()
-camera.set_config('burstnumber', burst_number)
 camera.set_config('capturemode', 1)
 
 

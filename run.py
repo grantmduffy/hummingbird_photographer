@@ -1,13 +1,20 @@
 # Main run file - should take images and run inference
 from time import sleep
 from shutil import copy
-from camera import capture_preview, capture
+from camera import capture_preview, capture, camera
 from mnv3_predict_tflite import predict_hum
 from os import listdir
+import argparse
 
 cap_folder = '/home/pi/shared/cap/'
 hum_folder = '/home/pi/shared/hum/'
 not_hum_folder = '/home/pi/shared/not_hum/'
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--burst', type=int, default=5)
+parser.add_argument('--delay', type=float, default=3.0)
+args = parser.parse_args()
+camera.set_config('burstnumber', args.burst)
 
 
 def get_dir_count(dir):
@@ -44,4 +51,4 @@ while True:
     else:
         print('No Hummingbird')
 
-    sleep(10)
+    sleep(args.delay)
