@@ -12,10 +12,10 @@ not_hum_folder = '/home/pi/shared/not_hum/'
 
 def get_dir_count(dir):
     files = listdir(dir)
-    if len(files) == 0:
-        return 0
     num_str = [n.upper().replace('.JPG', '').replace('CAP', '').replace('HUM', '').replace('N', '') for n in files]
     nums = [int(s) for s in num_str if s.isdecimal()]
+    if len(nums) == 0:
+        return 0
     return max(nums) + 1
 
 
