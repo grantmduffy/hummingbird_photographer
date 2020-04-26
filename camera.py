@@ -29,8 +29,9 @@ camera.set_config('capturemode', 1)
 def capture_preview():
     try:
         rm('capture_preview.jpg')
-    except:
-        pass
+    except Exception as e:
+        print('Failed to remove current images')
+        print(e)
     camera.capture_preview()
     return './capture_preview.jpg'
 
@@ -38,8 +39,9 @@ def capture_preview():
 def capture():
     try:
         rm('DSC*.JPG')
-    except:
-        pass
+    except Exception as e:
+        print('Failed to remove current images')
+        print(e)
     camera.delete_all_files(folder=dcim_folder)
     camera.capture_image()
     s = camera.get_all_files()
