@@ -1,8 +1,7 @@
 # Used for controlling dslr via gphoto2
 
 from sh import gphoto2 as gp
-from sh import rm
-from shutil import copy
+from os import system
 
 burst_number = 5
 dcim_folder = '/store_00010001/DCIM/100D5100/'
@@ -27,23 +26,26 @@ camera.set_config('burstnumber', burst_number)
 camera.set_config('capturemode', 1)
 
 
-def capture_preview(save_path=None):
+def capture_preview():
     try:
-        rm('capture_preview.jpg')
-    except:
-        pass
+        system('rm capture_preview.jpg')
+        # rm('./capture_preview.jpg')
+    except Exception as e:
+        print('Failed to remove current images')
+        print(e)
     camera.capture_preview()
-    if save_path is not None:
-        return copy('capture_preview.jpg', save_path)
     return './capture_preview.jpg'
 
 
 def capture():
     try:
-        rm('DSC*.JPG')
-    except:
-        pass
+        system('rm DSC_*.JPG')
+        # rm('DSC*.JPG')
+    except Exception as e:
+        print('Failed to remove current images')
+        print(e)
     camera.delete_all_files(folder=dcim_folder)
     camera.capture_image()
     s = camera.get_all_files()
-    return [line.split(' ')[3] for line in s.splitlines(True) if line[-1] != '\r']
+    camera.delete_all_files(folder=dcim_folder)
+    return [line.split(' ')[3].strip() for line in s.splitlines(True) if line[-1] != '\r']
