@@ -33,20 +33,22 @@ not_hum_count = get_dir_count(not_hum_folder)
 
 while True:
     img_path = capture_preview()
-    copy(img_path, cap_folder + f'CAP{cap_count:06d}.JPG')
+    path = copy(img_path, cap_folder + f'CAP{cap_count:06d}.JPG')
     cap_count += 1
-    print(f'Capture Taken: {img_path}...', end='')
+    print(f'Capture Taken: {path}...', end='')
     if predict_hum(img_path):
         print('Hummingbird Found!!!')
         for file in capture():
             print(f'\tFile: {file}: ', end='')
             if predict_hum(file):
-                print('Is Hummingbird')
-                copy(file, hum_folder + f'HUM{hum_count:06d}.JPG')
+                print('Is Hummingbird --> ', end='')
+                path = copy(file, hum_folder + f'HUM{hum_count:06d}.JPG')
+                print(path)
                 hum_count += 1
             else:
-                print('Not Hummingbird')
-                copy(file, not_hum_folder + f'NHUM{not_hum_count:06d}.JPG')
+                print('Not Hummingbird --> ', end='')
+                path = copy(file, not_hum_folder + f'NHUM{not_hum_count:06d}.JPG')
+                print(path)
                 not_hum_count += 1
     else:
         print('No Hummingbird')
