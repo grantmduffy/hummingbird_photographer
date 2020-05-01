@@ -69,7 +69,7 @@ model.compile(optimizer=tf.keras.optimizers.SGD(lr=0.005, momentum=0.9),
 model.summary()
 
 model.fit(imgs_arr, labels_binary,
-          epochs=5,
+          epochs=10,
           steps_per_epoch=1)
 
 # do prediction on new model
