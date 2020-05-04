@@ -33,10 +33,8 @@ else:
     # Freeze all the layers before the `fine_tune_at` layer
     model.summary()
     print(f'Number of layers: {len(model.layers)}')
-    for layer in model.layers[:120]:
+    for layer in model.layers[:150]:
         layer.trainable = False
-    model.summary()
-    model.trainable = False
     model.summary()
     model = tf.keras.Sequential([model])
     model.add(layers.GlobalMaxPooling2D())
@@ -45,12 +43,8 @@ else:
 
 model.summary()
 
-
-model.layers[-1].trainable = True
-
 # model.save('MobileNetV2')
 
-# model, hummingbird_index = create_model()
 
 def load_images(filelist):
     imgs = []
@@ -80,28 +74,29 @@ pred = model.predict(all_images)
 pred_class = np.argmax(pred, -1)
 pred_name = [imagenet_labels[pred_idx] for pred_idx in pred_class]
 
+opt_name = 'adam'
+if opt_name == 'sgd':
+    opt = tf.keras.optimizers.SGD(lr=0.05, momentum=0.9)
+elif opt_name == 'adam':
+    opt = tf.keras.optimizers.Adam()
 
-all_labels_binary = to_categorical(all_labels, num_classes=1001, dtype='float32')
-# Alternatively, you can use the loss function `sparse_categorical_crossentropy` instead,
-# which does expect integer targets.
-model.compile(optimizer=tf.keras.optimizers.SGD(lr=0.05, momentum=0.9),
+model.compile(optimizer=opt,
               loss=tf.keras.losses.BinaryCrossentropy(from_logits=True, label_smoothing=0.1),
               metrics=['accuracy'])
 model.summary()
-model.trainable
 
-model.fit(all_images, all_labels_binary,
-          epochs=10,
+all_labels = np.array(all_labels).astype('float')
+model.fit(all_images, all_labels,
+          epochs=20,
           steps_per_epoch=1,
           validation_split=0.2,
           shuffle=True)
 
 # do prediction on new model
 pred2 = model.predict(all_images)
-pred2_class = np.argmax(pred2, -1)
-pred_name2 = [imagenet_labels[pred_idx] for pred_idx in pred2_class]
+pred2_class = np.round(pred2)
 
-model.save('MobileNetV2_retrained')
+model.save('mnv2_retrained')
 
 # Convert the model.
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
