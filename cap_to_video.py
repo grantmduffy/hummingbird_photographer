@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 import cv2
 import numpy as np
 
-img_path = '//192.168.0.48/share/cap/'
+img_path = '//192.168.0.48/shared/cap/'
 n = len(listdir(img_path))
 fps = 20
 
