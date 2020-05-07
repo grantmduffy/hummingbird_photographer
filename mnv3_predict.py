@@ -37,3 +37,4 @@ def predict_hum(filename):
     result = classifier.predict(img_data[np.newaxis, ...])
     predicted_class = np.argmax(result[0], axis=-1)
     return predicted_class == hummingbird_index
+
