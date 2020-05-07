@@ -12,4 +12,4 @@ small_size = (220, 148)
 for folder in sub_folders:
     files = listdir(input_path + folder)
     for i, fname in enumerate(files):
-        Image.open(input_path + folder + fname).resize(small_size).save(output_path + folder + f'IMG{i:06d}.JPG')
+        Image.open(input_path + folder + fname).resize(small_size).save(output_path + folder + fname)

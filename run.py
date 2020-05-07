@@ -11,8 +11,8 @@ hum_folder = '/home/pi/shared/hum/'
 not_hum_folder = '/home/pi/shared/not_hum/'
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--burst', type=int, default=5)
-parser.add_argument('--delay', type=float, default=3.0)
+parser.add_argument('--burst', type=int, default=0)
+parser.add_argument('--delay', type=float, default=0.0)
 args = parser.parse_args()
 if args.burst > 0:
     camera.set_config('burstnumber', args.burst)
